@@ -11,7 +11,7 @@
         <link rel="stylesheet" type="text/css" href="../css/styles.css">
 
         <!-- Title of website showm on tab -->
-        <title>SignOnline | Sign In</title>
+        <title>SignOnline | Dashboard</title>
     </head>
 
     <body>
@@ -19,13 +19,12 @@
             <div class = "navbar-fixed blue valign-wrapper">
                 <nav>
                     <div class="nav-wrapper blue">
-                        <a href="#" class="brand-logo center blue">SignOnline | Sign In</a>
+                        <a href="#" class="brand-logo center blue">SignOnline | Dashboard</a>
                     </div>
                 </nav>
             </div>
         </header>
-        <div id="firebaseui-auth-container"></div>
-        
+
         <!-- The core Firebase JS SDK is always required and must be listed first -->
         <script src="/__/firebase/7.14.4/firebase-app.js"></script>
 
@@ -38,35 +37,6 @@
         <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
 
         <!-- Initialize Firebase -->
-        <script src="/__/firebase/init.js"></script>    
-        
-        <!-- Setup the Google sign in -->
-        <script> 
-           
-           var uiConfig = {
-               signInSuccessUrl: "html/dashboard.html",
-               signInOptions: [
-                    firebase.auth.GoogleAuthProvider.PROVIDER_ID
-               ]
-           };
-           var ui = new firebaseui.auth.AuthUI(firebase.auth());
-
-           ui.start('#firebaseui-auth-container', uiConfig);
-
-            var user = firebase.auth.currentUser;
-            if (user) 
-            {
-                document.getElementById("signedIn").style.display = "block";
-                document.getElementById("signedOut").style.display = "none";
-            }
-            else 
-            {
-                document.getElementById("signedOut").style.display = "block";
-                document.getElementById("signedIn").style.display = "none";
-            }
-        </script>
-        
-
-        </script>
+        <script src="/__/firebase/init.js"></script>
     </body>
 </html>
