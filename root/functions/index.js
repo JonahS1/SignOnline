@@ -1,5 +1,5 @@
 const functions = require('firebase-functions');
-
+//const nodeMailer = requore('nodeMailer');
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 const admin = require('firebase-admin');
 admin.initializeApp();
@@ -21,4 +21,30 @@ exports.addUserToDB = functions.auth.user().onCreate((user) => {
     .catch((error) => {
         console.error("Error adding document: ", error);
     });
+
 });
+
+require('dotenv').config()
+const {SENDER_EMAIL, SENDER_PASSWORD}= process.env;
+/*
+exports.sendEmailNotification=functions.firestore.document('submissions/{docID}')
+.onCreate((snap, ctx)=>{
+    const data=snap.data();
+    let authData=nodeMailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true, 
+        auth: {
+            user: SENDER_EMAIL,
+            pass: SENDER_PASSWORD
+        }
+    })
+authData.sendMail({
+    from : 'zacksussman@gmail.com',
+    to:`${data.email}` ,
+    subject: 'Request',
+    text: `${data.email}` ,
+    html: `${data.email}`,
+
+}).then(res=>console.log('very good')).catch(err=>console.log(err));
+})*/
