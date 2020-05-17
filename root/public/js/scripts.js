@@ -6,7 +6,7 @@ var sendRequest = () => {
 
     db.collection('students').where("email", "==", document.getElementById("reqEmail").value).get()
     .then(querySnapshot => {
-        document.getElementById("reqEmail").value = "";
+        document.getElementById("reqEmail").value = "request successful";
         var doc = querySnapshot.docs[0];
         console.log(querySnapshot.docs);
         db.collection('students').doc(doc.id).collection('sigs').add({
@@ -44,7 +44,7 @@ var sendInvite = () => {
             .catch(function(error){
                 console.error("Error adding document: ", error);
             });
-            document.getElementById("invEmail").value = "";
+            document.getElementById("invEmail").value = "invite successul";
         })
         .catch(function(error){
             console.error("Error with the QUERY: ", error);
