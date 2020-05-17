@@ -12,7 +12,8 @@ var sendRequest = () => {
         db.collection('students').doc(doc.id).collection('sigs').add({
             authorEmail: userEmail,
             svgString: '',
-            access: false
+            access: false,
+            request: true
         })
         .then(function(docRef){
             console.log("Document written with ID: ", docRef.id);
@@ -27,6 +28,23 @@ var sendRequest = () => {
     });
 };
 
+var makeIncomingRequestList = () => {
+    db.collection('students').where("email", "==", userEmail).get()
+    .then(querySnapshot => {
+        var doc = querySnapshot.docs[0];
+        doc.collection('sigs').where("request", "==", true).get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                document.getElementById('inReqList').innerHTML += "<br>" + doc.get('name');
+            })
+        })
+    })
+
+};
+
+
+
+
 var sendInvite = () => {
     if (doesUserExist(userEmail)) {
         db.collection('students').where("email", "==", userEmail).get()
@@ -36,7 +54,8 @@ var sendInvite = () => {
             db.collection('students').doc(doc.id).collection('sigs').add({
                 authorEmail: document.getElementById("invEmail").value,
                 svgString: '',
-                access: true
+                access: true,
+                request: false
             })
             .then(function(docRef){
                 console.log("Document written with ID: ", docRef.id);
@@ -54,6 +73,12 @@ var sendInvite = () => {
         document.getElementById("invEmail").value = "not a valid email!";
     }
 };
+
+var addInviteToList = () => {
+
+
+}
+
 
 function doesUserExist(email) {
     db.collection('students').where("email", "==", email).get()
