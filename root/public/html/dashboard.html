@@ -88,6 +88,16 @@
                 makeIncomingRequestList();
                 makeIncomingInviteList();
             };
+
+            function acceptRequestOfEmail(email) {
+               removeRequestFromEmail(email);
+               sendInvitationToEmail(email);
+            }
+
+            function rejectRequestOfEmail(email) {
+                removeRequestFromEmail(email);
+            }
+
             refresh();
         </script>
 

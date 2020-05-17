@@ -137,3 +137,80 @@ function doesUserExist(email) {
 }
 
 
+function removeInvitationFromEmail(email) {
+    db.collection('students').where("email", "==", userEmail).get()
+    .then(querySnapshot => {
+        var doc = querySnapshot.docs[0];
+        console.log(querySnapshot.docs);
+        db.collection('students').doc(doc.id).collection('sigs').where("senderEmail", "==", email).get()
+        .then(querySnapshot => {
+           var doc = querySnapshot.docs[0];
+           doc.remove()
+           .then(() => {
+               console.log("successfully deleted");
+           })
+           .catch(error => {
+               console.error("deletion error ", error);
+           })
+        })
+        .catch(error => {
+            console.error("query error: ", error);
+        })
+    }) 
+    .catch(error => {
+        console.error("query error: ", error);
+    })
+}
+
+function sendInvitationToEmail(email) {
+    db.collection('students').where("email", "==", email).get()
+    .then(querySnapshot => {
+        var doc = querySnapshot.docs[0];
+        console.log(querySnapshot.docs);
+        db.collection('students').doc(doc.id).collection('sigs').add({
+            authorEmail: email,
+            senderEmail: userEmail,
+            svgString: '',
+            access: true,
+            request: false
+        })
+        .then(function(docRef){
+            console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function(error){
+            console.error("Error adding document: ", error);
+        });
+        document.getElementById("invEmail").value = "Success";
+    })
+    .catch(function(error){
+        console.error("Error with the QUERY: ", error);
+    });
+}
+
+function removeRequestFromEmail(email) {
+    db.collection('students').where("email", "==", userEmail).get()
+    .then(querySnapshot => {
+        var doc = querySnapshot.docs[0];
+        console.log(querySnapshot.docs);
+        db.collection('students').doc(doc.id).collection('sigs').where("authorEmail", "==", email).get()
+        .then(querySnapshot => {
+           var doc = querySnapshot.docs[0];
+           doc.remove()
+           .then(() => {
+               console.log("successfully deleted");
+           })
+           .catch(error => {
+               console.error("deletion error ", error);
+           })
+        })
+        .catch(error => {
+            console.error("query error: ", error);
+        })
+    }) 
+    .catch(error => {
+        console.error("query error: ", error);
+    })
+}
+
+
+
