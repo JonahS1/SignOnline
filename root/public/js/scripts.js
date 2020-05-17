@@ -212,5 +212,36 @@ function removeRequestFromEmail(email) {
     })
 }
 
+function removeInvitationFromEmail(email) {
+
+    db.collection('students').where("email", "==", userEmail).get()
+    .then(querySnapshot => {
+        var doc = querySnapshot.docs[0];
+        console.log(querySnapshot.docs);
+        db.collection('students').doc(doc.id).collection('sigs').where("authorEmail", "==", userEmail).where("senderEmail", "==", email).get()
+        .then(querySnapshot => {
+           var doc2 = querySnapshot.docs[0];
+           db.collection('students').doc(doc.id).collection('sigs').doc(doc2.id).delete()
+           .then(() => {
+               console.log("successfully deleted");
+           })
+           .catch(error => {
+               console.error("deletion error ", error);
+           })
+        })
+        .catch(error => {
+            console.error("query error: ", error);
+        })
+    }) 
+    .catch(error => {
+        console.error("query error: ", error);
+    })
 
 
+}
+
+
+function prepareForDrawingPage() {
+
+    
+}

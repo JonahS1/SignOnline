@@ -92,14 +92,18 @@
             };
 
             function acceptRequestOfEmail(email) {
-               removeRequestFromEmail(email);
-               sendInvitationToEmail(email);
+                removeRequestFromEmail(email);
+                sendInvitationToEmail(email);
+                makeIncomingRequestList();
+                makeIncomingInviteList();
             };
 
             function rejectRequestOfEmail(email) {
                 removeRequestFromEmail(email);
+                makeIncomingRequestList();
+                makeIncomingInviteList();
             };
-
+            //refresh upon first load
             refresh();
         </script>
 
