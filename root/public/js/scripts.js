@@ -22,31 +22,47 @@ var sendRequest = () => {
         });
     })
     .catch(function(error){
+        document.getElementById("reqEmail").value = "not a valid email!";        
         console.error("Error with the QUERY: ", error);
     });
 };
 
 var sendInvite = () => {
-
-    db.collection('students').where("email", "==", userEmail).get()
-    .then(querySnapshot => {
-        var doc = querySnapshot.docs[0];
-        console.log(querySnapshot.docs);
-        db.collection('students').doc(doc.id).collection('sigs').add({
-            authorEmail: document.getElementById("invEmail").value,
-            svgString: '',
-            access: true
-        })
-        .then(function(docRef){
-            console.log("Document written with ID: ", docRef.id);
+    if (doesUserExist(userEmail)) {
+        db.collection('students').where("email", "==", userEmail).get()
+        .then(querySnapshot => {
+            var doc = querySnapshot.docs[0];
+            console.log(querySnapshot.docs);
+            db.collection('students').doc(doc.id).collection('sigs').add({
+                authorEmail: document.getElementById("invEmail").value,
+                svgString: '',
+                access: true
+            })
+            .then(function(docRef){
+                console.log("Document written with ID: ", docRef.id);
+            })
+            .catch(function(error){
+                console.error("Error adding document: ", error);
+            });
+            document.getElementById("invEmail").value = "";
         })
         .catch(function(error){
-            console.error("Error adding document: ", error);
+            console.error("Error with the QUERY: ", error);
         });
-    })
-    .catch(function(error){
-        console.error("Error with the QUERY: ", error);
-    });
+    }
+    else {
+        document.getElementById("invEmail").value = "not a valid email!";
+    }
 };
+
+function doesUserExist(email) {
+    db.collection('students').where("email", "==", email).get()
+   .then(querySnapshot => {
+        return querySnapshot.docs.length > 0;
+   })
+   .catch(function(error){
+    console.error("Error with the Query: ", error);
+    });
+}
 
 
