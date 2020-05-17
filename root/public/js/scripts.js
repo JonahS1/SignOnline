@@ -92,7 +92,7 @@ var makeIncomingRequestList = () => {
         db.collection('students').doc(doc.id).collection('sigs').where("request", "==", true).get()
         .then(querySnapshot => {
             querySnapshot.forEach(doc => {
-                document.getElementById('inReqList').innerHTML += "<br>" + doc.get('authorEmail') + '  <i class="material-icons green-text" id="' + doc.get('authorEmail') + '" onClick="acceptRequestOfEmail(' + doc.get('authorEmail') + ')">check</i>  <i class="material-icons red-text" id="' + doc.get('authorEmail') + '" onClick="rejectRequestOfEmail(' + doc.get('authorEmail') + ')">clear</i>';
+                document.getElementById('inReqList').innerHTML += `<br>${doc.get('authorEmail')}  <i class="material-icons green-text" id="${doc.get('authorEmail')}" onClick='acceptRequestOfEmail("${doc.get('authorEmail')}")'>check</i>  <i class="material-icons red-text" id="${doc.get('authorEmail')}" onClick="rejectRequestOfEmail("${doc.get('authorEmail')}")">clear</i>`;
             })
         })
         .catch(function(error){    
@@ -144,8 +144,8 @@ function removeInvitationFromEmail(email) {
         console.log(querySnapshot.docs);
         db.collection('students').doc(doc.id).collection('sigs').where("senderEmail", "==", email).get()
         .then(querySnapshot => {
-           var doc = querySnapshot.docs[0];
-           doc.remove()
+           var doc2 = querySnapshot.docs[0];
+           db.collection('students').doc(doc.id).collection('sigs').doc(doc2.id).delete()
            .then(() => {
                console.log("successfully deleted");
            })
@@ -194,8 +194,8 @@ function removeRequestFromEmail(email) {
         console.log(querySnapshot.docs);
         db.collection('students').doc(doc.id).collection('sigs').where("authorEmail", "==", email).get()
         .then(querySnapshot => {
-           var doc = querySnapshot.docs[0];
-           doc.remove()
+           var doc2 = querySnapshot.docs[0];
+           db.collection('students').doc(doc.id).collection('sigs').doc(doc2.id).delete()
            .then(() => {
                console.log("successfully deleted");
            })
