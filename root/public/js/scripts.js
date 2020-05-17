@@ -34,12 +34,35 @@ var sendRequest = () => {
 
 var sendInvite = () => {
     //if (doesUserExist()) {
-        db.collection('students').where("email", "==", userEmail).get()
+    //send invite to self   
+    db.collection('students').where("email", "==", userEmail).get()
         .then(querySnapshot => {
             var doc = querySnapshot.docs[0];
             console.log(querySnapshot.docs);
             db.collection('students').doc(doc.id).collection('sigs').add({
                 authorEmail: document.getElementById("invEmail").value,
+                svgString: '',
+                access: true,
+                request: false
+            })
+            .then(function(docRef){
+                console.log("Document written with ID: ", docRef.id);
+            })
+            .catch(function(error){
+                console.error("Error adding document: ", error);
+            });
+        })
+        .catch(function(error){
+            console.error("Error with the QUERY: ", error);
+        });
+        //send invite to person
+        db.collection('students').where("email", "==", document.getElementById("invEmail").value ).get()
+        .then(querySnapshot => {
+            var doc = querySnapshot.docs[0];
+            console.log(querySnapshot.docs);
+            db.collection('students').doc(doc.id).collection('sigs').add({
+                authorEmail: document.getElementById("invEmail").value,
+                senderEmail: userEmail,
                 svgString: '',
                 access: true,
                 request: false
@@ -86,10 +109,10 @@ var makeIncomingInviteList = () => {
     db.collection('students').where("email", "==", userEmail).get()
     .then(querySnapshot => {
         var doc = querySnapshot.docs[0];
-        db.collection('students').doc(doc.id).collection('sigs').where("request", "==", false).get()
+        db.collection('students').doc(doc.id).collection('sigs').where("authorEmail", "==", userEmail).get()
         .then(querySnapshot => {
             querySnapshot.forEach(doc => {
-                document.getElementById('inInvList').innerHTML += "<br>" + doc.get('authorEmail');
+                document.getElementById('inInvList').innerHTML += "<br>" + doc.get('senderEmail');
             });
         })
         .catch(function(error){     
