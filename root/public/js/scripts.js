@@ -92,7 +92,7 @@ var makeIncomingRequestList = () => {
         db.collection('students').doc(doc.id).collection('sigs').where("request", "==", true).get()
         .then(querySnapshot => {
             querySnapshot.forEach(doc => {
-                document.getElementById('inReqList').innerHTML += `<br>${doc.get('authorEmail')}  <i class="material-icons green-text" id="${doc.get('authorEmail')}" onClick='acceptRequestOfEmail("${doc.get('authorEmail')}")'>check</i>  <i class="material-icons red-text" id="${doc.get('authorEmail')}" onClick="rejectRequestOfEmail("${doc.get('authorEmail')}")">clear</i>`;
+                document.getElementById('inReqList').innerHTML += `<br>${doc.get('authorEmail')}  <i class="material-icons green-text" id="${doc.get('authorEmail')}" onClick='acceptRequestOfEmail("${doc.get('authorEmail')}")'>check</i>  <i class="material-icons red-text" id="${doc.get('authorEmail')}" onClick='rejectRequestOfEmail("${doc.get('authorEmail')}")'>clear</i>`;
             })
         })
         .catch(function(error){    
@@ -112,7 +112,7 @@ var makeIncomingInviteList = () => {
         db.collection('students').doc(doc.id).collection('sigs').where("authorEmail", "==", userEmail).get()
         .then(querySnapshot => {
             querySnapshot.forEach(doc => {
-                document.getElementById('inInvList').innerHTML += "<br>" + doc.get('senderEmail');
+                document.getElementById('inInvList').innerHTML += `<br>${doc.get('senderEmail')}  <i class="material-icons green-text" id="${doc.get('senderEmail')}" onClick='acceptRequestOfEmail("${doc.get('senderEmail')}")'>check</i>  <i class="material-icons red-text" id="${doc.get('senderEmail')}" onClick='rejectRequestOfEmail("${doc.get('senderEmail')}")'>clear</i>`;
             });
         })
         .catch(function(error){     
