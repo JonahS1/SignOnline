@@ -1,10 +1,13 @@
 var db = firebase.firestore();
-var user = firebase.auth.currentUser;
-function sendRequest() {
-    db.collection('students').where("email", "==", document.getElementById("reqEmail")).get()
+var userEmail = JSON.parse(sessionStorage.userEmail);
+var sendRequest = () => {
+
+    db.collection('students').where("email", "==", document.getElementById("reqEmail").value).get()
     .then(querySnapshot => {
-        db.collection('students').doc(querySnapshot.docs[0].id).collection('sigs').add({
-            authorEmail: user.email,
+        var doc = querySnapshot.docs[0];
+        console.log(querySnapshot.docs);
+        db.collection('students').doc(doc.id).collection('sigs').add({
+            authorEmail: userEmail,
             svgString: '',
             access: false
         })

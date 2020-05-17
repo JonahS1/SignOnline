@@ -10,6 +10,8 @@ var db = admin.firestore();
 // Create and Deploy Your First Cloud Functions
 // https://firebase.google.com/docs/functions/write-firebase-functions
 
+
+
 exports.addUserToDB = functions.auth.user().onCreate((user) => {
     db.collection("students").add({
         email: user.email,

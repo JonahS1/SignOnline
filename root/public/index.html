@@ -43,6 +43,7 @@
         <!-- Setup the Google sign in -->
         <script> 
            
+
            var uiConfig = {
                signInSuccessUrl: "html/dashboard.html",
                signInOptions: [
@@ -53,17 +54,13 @@
 
            ui.start('#firebaseui-auth-container', uiConfig);
 
-            var user = firebase.auth.currentUser;
-            if (user) 
-            {
-                document.getElementById("signedIn").style.display = "block";
-                document.getElementById("signedOut").style.display = "none";
-            }
-            else 
-            {
-                document.getElementById("signedOut").style.display = "block";
-                document.getElementById("signedIn").style.display = "none";
-            }
+           // var user = firebase.auth().currentUser;
+           
+        
+            firebase.auth().onAuthStateChanged(function(user) {
+                sessionStorage.userEmail = JSON.stringify(user.email);
+            });
+
         </script>
         
 
