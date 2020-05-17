@@ -1,0 +1,20 @@
+.request, .invite {
+    display: flex;
+    justify-content: center;
+}
+
+input[type=text] {
+    width: 30vw !important;
+    border: 2px solid #aaa !important;
+    border-radius: 4px !important;
+    margin: 8px 0 !important;
+    outline: none !important;
+    padding: 8px !important;
+    box-sizing: border-box !important;
+    transition: .3s !important;
+}
+
+input[type=text]:focus {
+    border-color: dodgerblue !important;
+    box-shadow: 0 0 8px 0 dodgerblue !important;
+}
