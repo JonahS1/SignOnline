@@ -63,9 +63,9 @@
                 <li><p id="inInvList"></p></li>
             </ul>
         </div>
-        <button onclick = "refresh()" class="btn waves-effect waves-light blue center">refresh</button>
-        <script>
-        </script>
+
+        <button onclick="refresh()" class="btn waves-effect waves-light blue">refresh</button>
+
         <!-- The core Firebase JS SDK is always required and must be listed first -->
         <script src="/__/firebase/7.14.4/firebase-app.js"></script>
         
@@ -84,12 +84,11 @@
 
         <script src="../js/scripts.js"></script>
         <script>
-        function refresh() {
-            makeIncomingRequestList();
-            makeIncomingInviteList();
-       
-        }
-
+            function refresh() {
+                makeIncomingRequestList();
+                makeIncomingInviteList();
+            };
+            refresh();
         </script>
 
     </body>

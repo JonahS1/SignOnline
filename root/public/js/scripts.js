@@ -62,7 +62,7 @@ var sendInvite = () => {
 };
 
 var makeIncomingRequestList = () => {
-    document.getElementById('inReqList') = "";
+    document.getElementById('inReqList').innerHTML = "";
     db.collection('students').where("email", "==", userEmail).get()
     .then(querySnapshot => {
         var doc = querySnapshot.docs[0];
@@ -82,7 +82,7 @@ var makeIncomingRequestList = () => {
 };
 
 var makeIncomingInviteList = () => {
-    document.getElementById('inInvList') = "";
+    document.getElementById('inInvList').innerHTML = "";
     db.collection('students').where("email", "==", userEmail).get()
     .then(querySnapshot => {
         var doc = querySnapshot.docs[0];
