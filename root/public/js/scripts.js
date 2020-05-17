@@ -6,7 +6,7 @@ var sendRequest = () => {
 
     db.collection('students').where("email", "==", document.getElementById("reqEmail").value).get()
     .then(querySnapshot => {
-        document.getElementById("reqEmail").value = "";
+        document.getElementById("reqEmail").value = "Success";
         var doc = querySnapshot.docs[0];
         console.log(querySnapshot.docs);
         db.collection('students').doc(doc.id).collection('sigs').add({
@@ -28,25 +28,12 @@ var sendRequest = () => {
     });
 };
 
-var makeIncomingRequestList = () => {
-    db.collection('students').where("email", "==", userEmail).get()
-    .then(querySnapshot => {
-        var doc = querySnapshot.docs[0];
-        doc.collection('sigs').where("request", "==", true).get()
-        .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-                document.getElementById('inReqList').innerHTML += "<br>" + doc.get('name');
-            })
-        })
-    })
-
-};
 
 
 
 
 var sendInvite = () => {
-    if (doesUserExist(userEmail)) {
+    //if (doesUserExist()) {
         db.collection('students').where("email", "==", userEmail).get()
         .then(querySnapshot => {
             var doc = querySnapshot.docs[0];
@@ -63,19 +50,55 @@ var sendInvite = () => {
             .catch(function(error){
                 console.error("Error adding document: ", error);
             });
-            document.getElementById("invEmail").value = "";
+            document.getElementById("invEmail").value = "Success";
         })
         .catch(function(error){
             console.error("Error with the QUERY: ", error);
         });
-    }
-    else {
-        document.getElementById("invEmail").value = "not a valid email!";
-    }
+    //}
+    //else {
+     //   document.getElementById("invEmail").value = "not a valid email!";
+    //}
 };
 
-var addInviteToList = () => {
+var makeIncomingRequestList = () => {
+    document.getElementById('inReqList') = "";
+    db.collection('students').where("email", "==", userEmail).get()
+    .then(querySnapshot => {
+        var doc = querySnapshot.docs[0];
+        db.collection('students').doc(doc.id).collection('sigs').where("request", "==", true).get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                document.getElementById('inReqList').innerHTML += "<br>" + doc.get('authorEmail');
+            })
+        })
+        .catch(function(error){    
+            console.error("Error with the QUERY: ", error);
+        });
+    })
+    .catch(function(error){     
+        console.error("Error with the QUERY: ", error);
+    });
+};
 
+var makeIncomingInviteList = () => {
+    document.getElementById('inInvList') = "";
+    db.collection('students').where("email", "==", userEmail).get()
+    .then(querySnapshot => {
+        var doc = querySnapshot.docs[0];
+        db.collection('students').doc(doc.id).collection('sigs').where("request", "==", false).get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                document.getElementById('inInvList').innerHTML += "<br>" + doc.get('authorEmail');
+            });
+        })
+        .catch(function(error){     
+            console.error("Error with the QUERY: ", error);
+        });
+    })
+    .catch(function(error){ 
+        console.error("Error with the QUERY: ", error);
+    });
 
 }
 

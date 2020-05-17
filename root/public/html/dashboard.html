@@ -42,11 +42,15 @@
                 <li><p id="inReqList"></p></li>
             </ul>
         </div>
-      
+        
+     
+          
+    
+
         <div class="invite">
             <ul class="center">
                 <li><h4><strong>invite someone to sign your yearbook</strong></h4></li>
-                <li><input type="text" id="invEmail" name="email" placeholder="Enter email address here"></li>
+                <li><input type="text" id="invEmail" name="invEmail" placeholder="Enter email address here"></li>
                 <li><button onclick = "sendInvite()" class="btn waves-effect waves-light blue" type="submit" name="action">Send
                     <i class="material-icons right">send</i>
                   </button></li>
@@ -59,11 +63,12 @@
                 <li><p id="inInvList"></p></li>
             </ul>
         </div>
+        <button onclick = "refresh()" class="btn waves-effect waves-light blue center">refresh</button>
         <script>
         </script>
         <!-- The core Firebase JS SDK is always required and must be listed first -->
         <script src="/__/firebase/7.14.4/firebase-app.js"></script>
-
+        
         <!-- TODO: Add SDKs for Firebase products that you want to use
             https://firebase.google.com/docs/web/setup#available-libraries -->
         <script src="/__/firebase/7.14.4/firebase-analytics.js"></script>
@@ -78,5 +83,14 @@
         
 
         <script src="../js/scripts.js"></script>
+        <script>
+        function refresh() {
+            makeIncomingRequestList();
+            makeIncomingInviteList();
+       
+        }
+
+        </script>
+
     </body>
 </html>
