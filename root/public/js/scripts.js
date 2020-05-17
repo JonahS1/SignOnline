@@ -112,7 +112,7 @@ var makeIncomingInviteList = () => {
         db.collection('students').doc(doc.id).collection('sigs').where("authorEmail", "==", userEmail).get()
         .then(querySnapshot => {
             querySnapshot.forEach(doc => {
-                document.getElementById('inInvList').innerHTML += `<br>${doc.get('senderEmail')}  <a href="../html/canvas.html" target="_blank"><i class="material-icons green-text" id="${doc.get('senderEmail')}" onClick='acceptRequestOfEmail("${doc.get('senderEmail')}")'>edit</i></a>  <i class="material-icons red-text" id="${doc.get('senderEmail')}" onClick='rejectRequestOfEmail("${doc.get('senderEmail')}")'>clear</i>`;
+                document.getElementById('inInvList').innerHTML += `<br>${doc.get('senderEmail')}  <i class="material-icons green-text" id="${doc.get('senderEmail')}" onClick='prepareForDrawingPage("${doc.get('senderEmail')}")'>edit</i>  <i class="material-icons red-text" id="${doc.get('senderEmail')}" onClick='rejectRequestOfEmail("${doc.get('senderEmail')}")'>clear</i>`;
             });
         })
         .catch(function(error){     
