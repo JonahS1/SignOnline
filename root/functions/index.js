@@ -12,7 +12,8 @@ var db = admin.firestore();
 
 exports.addUserToDB = functions.auth.user().onCreate((user) => {
     db.collection("students").add({
-        email: user.email
+        email: user.email,
+        name: user.displayName
     })
     .then((docRef) => {
         return console.log("Document written with ID: ", docRef.id);
