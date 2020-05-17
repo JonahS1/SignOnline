@@ -6,6 +6,7 @@ var sendRequest = () => {
 
     db.collection('students').where("email", "==", document.getElementById("reqEmail").value).get()
     .then(querySnapshot => {
+        document.getElementById("reqEmail").value = "";
         var doc = querySnapshot.docs[0];
         console.log(querySnapshot.docs);
         db.collection('students').doc(doc.id).collection('sigs').add({
