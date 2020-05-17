@@ -92,7 +92,7 @@ var makeIncomingRequestList = () => {
         db.collection('students').doc(doc.id).collection('sigs').where("request", "==", true).get()
         .then(querySnapshot => {
             querySnapshot.forEach(doc => {
-                document.getElementById('inReqList').innerHTML += "<br>" + doc.get('authorEmail');
+                document.getElementById('inReqList').innerHTML += "<br>" + doc.get('authorEmail') + '  <i class="material-icons green-text" id="' + doc.get('authorEmail') + '" onClick="acceptRequestOfEmail(' + doc.get('authorEmail') + ')">check</i>  <i class="material-icons red-text" id="' + doc.get('authorEmail') + '" onClick="rejectRequestOfEmail(' + doc.get('authorEmail') + ')">clear</i>';
             })
         })
         .catch(function(error){    
