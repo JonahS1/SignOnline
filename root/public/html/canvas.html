@@ -2,6 +2,12 @@
 <!DOCTYPE html>
 <html>
     <head>
+    
+        <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+         <link rel='stylesheet' type='text/css' href='/resources/tutorial/css/example.css'>
+          
+        
         <!--Import materialize.css-->
         <link type="text/css" rel="stylesheet" href="../css/materialize.min.css"  media="screen,projection"/>
 
@@ -58,13 +64,16 @@
         </ul>
 
         <script>
+           function saveSvg() {
             var db = firebase.firestore();
-            
-
-            var saveSvg = () => {
+            var senderEmail = localStorage.getItem('senderEmail');
+            var currentWindow = sessionStorage.theWindow;
                 var ifrm = document.getElementById("ifrm");
                 var canvas = ifrm.contentWindow.svgEditor.canvas;
-            }
+                removeInvitationFromEmail(senderEmail);
+                console.log("we got a ", senderEmail);
+                currentWindow.close();
+            };
         </script>
 
         <!-- The core Firebase JS SDK is always required and must be listed first -->
