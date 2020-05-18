@@ -2,8 +2,6 @@ var db = firebase.firestore();
 var userEmail = JSON.parse(sessionStorage.userEmail);
 
 
-var sendRequest = () => {
-
 var sendRequestSuccessful = () => {
     db.collection('students').where("email", "==", document.getElementById("reqEmail").value).get()
     .then(querySnapshot => {
@@ -135,15 +133,20 @@ var sendInvite = () => {
         }
 
 
-function doesUserExistInstruction(email, instruction, other) {
-    userExists = false;
+function doesUserExistInstruction(email, userExistsFunction, userDoesNotExistFunction) {
     db.collection('students').get().then((snapshot) => {
+       var counter = 1;
         snapshot.docs.forEach(doc => {
-            if (doc.get("email").toUpperCase() == email.toUpperCase()) {
-                instruction();
+            if (doc.get("email").toUpperCase() == email.toUpperCase() && email != userEmail) {
+                userExistsFunction();
+                return;
             }
+            if (counter == snapshot.docs.length) {
+                userDoesNotExistFunction();
+                return;
+            }
+            counter ++; 
         })
-        other();
     })
     .catch(function(error){ 
         console.error("Error with the search: ", error);
@@ -256,6 +259,9 @@ function removeInvitationFromEmail(email) {
 
 
 function prepareForDrawingPage(email) {
-    sessionStorage.senderEmail = email;
-    window.open('../html/canvas.html')
+    console.log("the storage has got a ", email)
+    localStorage.setItem("senderEmail", email);
+    console.log("the variable has got a ", localStorage.getItem('senderEmail'));
+    sessionStorage.theWindow = window.open('../html/canvas.html')
+
 }
